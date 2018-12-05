@@ -23,11 +23,32 @@ class UserTest < Minitest::Test
     joke_1 = Joke.new(1, "Why did the strawberry cross the road?", "Because his mother was in a jam.")
     joke_2 = Joke.new(2, "How do you keep a lion from charging?", "Take away its credit cards.")
 
-    @sal.learn_joke(joke_1)
-    @sal.learn_joke(joke_2)
-    
+    @sal.learn(joke_1)
+    @sal.learn(joke_2)
+
     assert_equal [joke_1, joke_2], @sal.jokes
   end
 
+  def test_can_sal_tell_ali_a_joke
+    ali = User.new("Ali")
+    joke_1 = Joke.new(1, "Why did the strawberry cross the road?", "Because his mother was in a jam.")
+    joke_2 = Joke.new(2, "How do you keep a lion from charging?", "Take away its credit cards.")
+
+    @sal.tell(ali, joke_1)
+    @sal.tell(ali, joke_2)
+
+    assert_equal [joke_1, joke_2], ali.jokes
+  end
+
+  def test_get_joke_by_id
+    ali = User.new("Ali")
+    joke_1 = Joke.new(1, "Why did the strawberry cross the road?", "Because his mother was in a jam.")
+    joke_2 = Joke.new(2, "How do you keep a lion from charging?", "Take away its credit cards.")
+
+    @sal.tell(ali, joke_1)
+    @sal.tell(ali, joke_2)
+
+    assert_equal [joke_1], ali.joke_by_id(1)
+  end
 
 end
